@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float playerSpeed = 1f;
-    public GameObject parabolicRaycaster;
-    bool teleportTogggle = true;
+    public GameObject parabolicRaycaster, movementText, teleportText, gazeRing, lineRaycaster, menu;
+    bool canTeleport = true;
     // Use this for initialization
     void Start()
     {
@@ -16,8 +16,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame...
     void Update()
     {
-        ToggleCheck();
-        if (teleportTogggle)
+        if (OVRInput.GetDown(OVRInput.Button.Back) && !menu.activeInHierarchy)
+        {
+            menu.SetActive(true);
+            gazeRing.SetActive(true);
+            lineRaycaster.SetActive(true);
+        }
+        //ToggleCheck();
+        if (canTeleport)
         {
             Teleport();
         }
@@ -28,21 +34,25 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ToggleCheck()
     {
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        //if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
-            if (teleportTogggle)
+            if (canTeleport)
             {
-                teleportTogggle = false;
+                canTeleport = false;
+                teleportText.SetActive(true);
+                movementText.SetActive(false);
             }
             else
             {
-                teleportTogggle = true;
+                canTeleport = true;
+                teleportText.SetActive(false);
+                movementText.SetActive(true);
             }
         }
     }
     public void Teleport()
     {
-        if (OVRInput.Get(OVRInput.Touch.PrimaryTouchpad) && teleportTogggle)
+        if (OVRInput.Get(OVRInput.Touch.PrimaryTouchpad) && canTeleport)
         {
             parabolicRaycaster.SetActive(true);
         }
