@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ToggleCheck()
     {
-        //if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        ////if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
             if (canTeleport)
             {
